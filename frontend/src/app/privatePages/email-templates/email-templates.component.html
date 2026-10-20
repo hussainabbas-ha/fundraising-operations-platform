@@ -1,0 +1,95 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-4 col-12">
+            <h1 class="mb-0">Email Templates</h1>
+            <p class="text-secondary mb-2 mb-md-0">List of Templates</p>
+        </div>
+        <div class="col-md-5 col-9">
+            <form [formGroup]="search" (ngSubmit)="filter()">
+                <div class="form-group">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput placeholder="Search Email Template" type="text" formControlName="q" />
+                        <i matSuffix class="fa-solid fa-magnifying-glass"></i>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 col-3">
+            <button mat-ripple Permission="emailTemplate:add" (click)="createUpdateTemplate()"
+                class="btn btn-secondary text-light w-100"><i class="fa-solid fa-plus"></i> <span
+                    class="d-none d-md-inline"> New</span></button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="scroll-wrapper">
+            <div class="scroll-container">
+                <div class="scrollable">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Email Types</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of emailTypes">
+                                <td (click)="getTypeId(item._id)" style="cursor: pointer;"
+                                    [class.active]="emailTypeId == item._id">
+                                    <span class="label">Title</span>{{item.title}} <span
+                                        class="badge bg-secondary float-end">{{item.count}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="scroll-wrapper">
+            <div class="scroll-container">
+                <div class="scrollable">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Subject</th>
+                                <th>Active</th>
+                                <th width="5%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataSource">
+                                <td><span class="label">Title</span>{{item.title}}</td>
+                                <td><span class="label">Subject</span>{{item.subject}}</td>
+                                <td><span class="label">active</span>
+                                    <input (change)="updateStatus(item._id)" type="checkbox"
+                                        class="form-check-input ms-2" id="customCheck2" [checked]="item.active">
+                                </td>
+                                <td class="action-button">
+                                    <a class="btn btn-sm btn-light" mat-ripple [matMenuTriggerFor]="menu"><i
+                                            class="fa-solid fa-ellipsis-vertical"></i></a>
+                                    <mat-menu #menu="matMenu" class="bg-light">
+                                        <button mat-menu-item mat-ripple Permission="emailTemplate:add" (click)="duplicateTemplate(item._id)"><i
+                                                class="fa-regular fa-clone text-warning"></i> Duplicate</button>
+                                        <button mat-menu-item mat-ripple Permission="emailTemplate:update"
+                                            (click)="createUpdateTemplate(item._id)"><i
+                                                class="fa-regular fa-pen-to-square text-success"></i>
+                                            Update</button>
+                                        <button mat-menu-item mat-ripple Permission="emailTemplate:delete"
+                                            (click)="deleteTemplate(item._id)"><i
+                                                class="fa-regular fa-trash-can text-danger"></i>
+                                            Delete</button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <pagination [pager]="pager" [params]="queryParams"></pagination>
+        </div>
+    </div>
+</div>

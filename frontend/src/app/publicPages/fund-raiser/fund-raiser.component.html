@@ -1,0 +1,468 @@
+<div class="container-fluid align-items-center justify-content-end d-flex custom-cover" [ngStyle]="{
+    'background-image': 'url(' + data?.campaign.group.cover + ')',
+    'background-size': 'cover',
+    'background-position': 'center center',
+    'background-repeat': 'no-repeat'
+  }">
+
+    <div class="text-center custom-card rounded-5 w-25 text-light" *ngIf="data?.campaign.status == 'active'">
+        <div class="px-4 pb-3 pt-2">
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+                <div class="text-start">
+                    <small class="d-block fst-italic">Team Goal</small>
+                    <span class="fw-semibold">{{data?.campaign.group.goal | currency}}</span>
+                </div>
+                <div class="text-end">
+                    <small class="d-block fst-italic">Total Raised</small>
+                    <span class="fw-semibold">$5,000</span>
+                </div>
+            </div>
+            <div class="flex-grow-1">
+                <div class="progress-container">
+                    <div class="progress-bar" [style.width.%]="teamProgress">
+                        <span class="progress-text">{{ data?.campaign.group.totalRaised | currency }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mx-lg-5 mx-3 px-lg-5 ">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="d-flex pb-0 pb-md-3 align-items-center">
+                <div class="orgLogo shadow bg-light">
+                    <img src="{{data?.campaign.organization.logo}}" alt="demo-user" />
+                </div>
+                <div class="ms-3 mt-2">
+                    <h3>
+                        {{data?.campaign.organization.name}} <span class="h4 fw-normal">-
+                            {{data?.campaign.group.name}}</span>
+                    </h3>
+                    <p class="fst-italic">
+                        {{data?.campaign.name}} {{data?.campaign.season}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-12 col-lg-6 col-md-8 offset-lg-3 offset-md-2 pt-3">
+                    <ng-container *ngIf="data?.campaign.status == 'active'">
+                        <app-timer *ngIf="isBrowser" [endDate]="data?.campaign.endDate"></app-timer>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" *ngIf="data?.campaign.status=='pending'">
+        <div class="row">
+            <div class="col-md-8 col-12 offset-lg-2">
+                <div class="card">
+                    <div class="card-body p-md-5">
+                        <div class="d-flex align-items-center">
+                                <img src="/assets/images/microphone.svg" alt="announcement" style="width: 100px;">
+                            <div class="flex-grow-1 ms-3">
+                                <h3>Get Ready!</h3>
+                            </div>
+                        
+                        </div>
+                        <p class="text-center">Our upcoming fundraising campaign will officially begin on <strong>{{data?.campaign.startDate}}</strong>. <br>
+                            Stay tuned and be part of something impactful — your support can make a real difference!</p>
+                        <ng-container *ngIf="data?.campaign.status=='pending'">
+                            <div class="row">
+                                <div class="col-12 col-lg-8 col-md-8 offset-lg-2 offset-md-2">
+                                    <app-timer *ngIf="isBrowser" [endDate]="data?.campaign.startDate"></app-timer>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="form" *ngIf="data?.campaign.status == 'active'">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <ng-container *ngFor="let item of data?.campaign.products">
+                    <div class="row" *ngIf="item.productType === 'customDonation'">
+                        <div class="col-12">
+                            <h5>Amount</h5>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <mat-label></mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="amount" placeholder="Amount" type="number">
+                                    <mat-error>
+                                        <vmessage field="amount" [control]="form.controls['amount']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-3" *ngIf="item.productType === 'digital'">
+                        <div class="col-12">
+                            <h5>Digital</h5>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-2 px-1" *ngFor="let digitalProduct of item.products">
+                                    <div class="product" (click)="selectedProduct = digitalProduct"
+                                        [class.selected]="selectedProduct === digitalProduct">
+                                        <p class="mb-0">${{digitalProduct.amount}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row my-3" *ngIf="item.productType?.trim().toLowerCase() === 'physical'">
+                        <div class="col-12">
+                            <h5 class="text-primary">Products</h5>
+                        </div>
+                        <div class="col-md-10 col-12">
+                            <div class="row">
+                                <div class="col-md-4 px-1">
+                                    <div class="product mb-2" (click)="selectedProduct = item"
+                                        [class.selected]="selectedProduct === item">
+                                        <div class="prod-image">
+                                            <img src="{{item?.image}}" alt="product-image">
+                                        </div>
+                                        <div class="ms-1">
+                                            <p class="mb-0">{{item.title}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="selectedProduct?.variants?.length > 0">
+                            <div class="row my-2">
+                                <div class="col-12">
+                                    <h5 class="text-primary">Variants</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-4 px-1" *ngFor="let variant of selectedProduct?.variants">
+                                            <div class="product mb-2">
+                                                <div class="prod-image">
+                                                    <img src="{{variant.image ? variant.image : selectedProduct.image}}" alt="">
+                                                </div>
+                                                <div class="ms-1">
+                                                    <p class="mb-0 text-primary">{{variant.name}}</p>
+                                                    <span class="text-success">{{variant.sellingPrice |
+                                                        currency}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+                        <div class="row align-items-center my-2"
+                            *ngIf="selectedProduct && selectedProduct.productType === 'physical'">
+                            <div class="col-md-12">
+                                <h5>Enter Quantity</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <mat-label></mat-label>
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <input matInput form placeholder="Quantity" formControlName="qty"
+                                            type="number" />
+                                        <mat-error>
+                                            <vmessage field="qty" [control]="form.controls['qty']">
+                                            </vmessage>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+                <div class="row mt-3">
+                    <div class="col-12 col-md-10">
+                        <p>A <strong>3% </strong>of processing fee will be added to cover credit card cost.This
+                            allows
+                            us to give more money to the program.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-11">
+                        <h4 class="mb-2 ">Thanks to our supporters!</h4>
+                        <div class="card rounded-5 shadow bg-cp_2">
+                            <div class="card-body p-4 text-light">
+                                <div class="scrollable">
+                                    <ng-container *ngFor="let message of data?.campaign.messages; let i = index">
+                                        <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+                                            <div class="fundraiserImage" [style.color]="colors[i%12]"
+                                                [style.borderColor]="colors[i%12]">
+                                                {{getInitials(message.name)}}
+                                            </div>
+                                            <div class="flex-grow-1 ms-2 ">
+                                                <h6 class="mb-0">{{(message.name)}} ({{message.reference}})</h6>
+                                                <small>{{message.message}}</small>
+                                            </div>
+                                            <div class="fw-semibold">
+                                                {{message.total | currency}}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-12">
+                <div class="d-flex align-items-center">
+                    <div class="profile-image">
+                        <img src="{{data?.campaign.group.logo}}" alt="school-logo">
+                    </div>
+                    <div class="ms-2 flex-grow-1">
+                        <h3 class="fw-semibold">{{data?.campaign.group.name}}</h3>
+                    </div>
+                    <div class="me-2">
+                        <span class="d-block fw-semibold">Total Team Raised</span>
+                        <div class="text-center fw-semibold bg-cp_2 rounded-3 px-3 py-2 text-light w-100">
+                            $9,725</div>
+
+                    </div>
+
+                </div>
+                <div class="mt-3">
+                    <p class="text-muted mb-0 pe-lg-5">{{data?.campaign.message}}</p>
+                </div>
+                <div class="mt-4">
+                    <h4>{{data?.campaign.student.name}} Progress Tracker</h4>
+                </div>
+                <div class="order-1 text-center order-lg-2">
+                    <div class="d-flex justify-content-between align-items-center my-4">
+                        <div class="text-start">
+                            <small class="text-muted d-block">Start</small>
+                            <span class="fw-semibold">$0.00</span>
+                        </div>
+
+                        <div class="flex-grow-1 mx-3">
+                            <div class="progress-container">
+                                <div class="progress-animate">
+                                    <div class="progress-bar" [style.width.%]="studentProgress">
+                                        <span class="progress-text">{{ data?.campaign.student.totalRaised | currency
+                                            }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted d-block">My Goal</small>
+                            <span class="fw-semibold">{{data?.campaign.student.goal | currency}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bg-cp_2  my-2 rounded-4">
+                    <div class="col-md-6">
+                        <div class="justify-content-center align-items-center d-flex mb-md-0 mb-4">
+                            <div class="campaign-logo">
+                                <img [ngStyle]="logoStyle" src="{{data?.campaign.company.logo}}" alt="team-logo">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="justify-content-center align-items-center d-flex">
+                            <div class="campaign-logo">
+                                <img src="assets/logos/sideBar_logo.png" [ngStyle]="logoStyle" alt="team-logo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-items-center d-flex my-3">
+                    <p class="mb-0 fst-italic">Share this page to share our results!</p>
+                    <i class="fa-brands h2 text-secondary fa-facebook mx-3 "></i>
+                    <i class="fa-brands h2 text-cp_3 fa-square-instagram"></i>
+                    <i class="fa-brands h2 fa-x-twitter mx-3"></i>
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-label>First Name</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="firstName" placeholder="First Name" type="text">
+                                    <mat-error>
+                                        <vmessage field="firstName" [control]="form.controls['firstName']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-label>Last Name</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="lastName" placeholder="Last Name" type="text">
+                                    <mat-error>
+                                        <vmessage field="lastName" [control]="form.controls['lastName']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-label>House Address</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="address" placeholder="House Address" type="text">
+                                    <mat-error>
+                                        <vmessage field="address" [control]="form.controls['address']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <mat-label>Phone</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput form placeholder="Phone No" formControlName="phoneNo" type="tel" />
+                                    <mat-error>
+                                        <vmessage field="phoneNo" [control]="form.controls['phoneNo']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <mat-label>Zip Code</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput form placeholder="Zip Code" formControlName="zipCode"
+                                        type="number" />
+                                    <mat-error>
+                                        <vmessage field="zipCode" [control]="form.controls['zipCode']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-label>Email</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="email" placeholder="Email" type="email">
+                                    <mat-error>
+                                        <vmessage field="email" [control]="form.controls['email']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <mat-label>Card Number</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="cardNo" placeholder="Card Number" type="text">
+                                    <mat-error>
+                                        <vmessage field="cardNo" [control]="form.controls['cardNo']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <mat-label>MM/YY</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="cardExpiry" placeholder="MM/YY" type="text">
+                                    <mat-error>
+                                        <vmessage field="cardExpiry" [control]="form.controls['cardExpiry']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <mat-label>CVV</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="cvv" placeholder="CVV" type="number">
+                                    <mat-error>
+                                        <vmessage field="cvv" [control]="form.controls['cvv']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-label>Leave A Message</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <textarea matInput form placeholder="Message" formControlName="message" type="text"
+                                        rows="5"></textarea>
+                                    <mat-error>
+                                        <vmessage field="message" [control]="form.controls['message']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="checkbox" formControlName="isAnonymous"> I would like this donation to be
+                            anonymous.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary">Submit Donation</button>
+            </div>
+        </div>
+    </form>
+</div>
+<footer style="margin-top: calc(100vh - 676px); padding: 0px;">
+    <div class="bg-cp_2 rounded-top px-lg-5 px-3">
+        <div class="row py-3 mx-lg-5 align-items-center">
+            <div class="col-md-6 col-lg-4  order-1 col-12">
+            </div>
+            <div class="col-md-12 col-lg-4 col-12 order-3 order-lg-2">
+                <div class="text-light d-flex justify-content-center align-items-center">
+                    <p>Powered by</p>
+                    <img src="/assets/logos/campaign footer.png" alt="ventav logo">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-12 order-lg-3 order-2 d-none d-md-inline-block">
+                <div class="float-md-end d-md-flex">
+                    <a class="text-light">Contact Us</a>
+                    <a class="text-light mx-3">Join our team</a>
+                    <a class="text-light">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

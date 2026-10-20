@@ -1,0 +1,70 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>Invite Leader</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>First Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="firstName" placeholder="First Name" type="text">
+                        <mat-error>
+                            <vmessage field="firstName" [control]="form.controls['firstName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="lastName" placeholder="Last Name" type="text">
+                        <mat-error>
+                            <vmessage field="lastName" [control]="form.controls['lastName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Email</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="email" placeholder="Email" type="email">
+                        <mat-error>
+                            <vmessage field="email" [control]="form.controls['email']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can invite leader by clicking the
+                    invite.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">Invite</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>

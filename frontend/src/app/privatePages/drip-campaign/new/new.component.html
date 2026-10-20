@@ -1,0 +1,131 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Drip Campaign</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Title</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="title" placeholder="Drip Campaign" type="text">
+                        <mat-error>
+                            <vmessage field="title" [control]="form.controls['title']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group" >
+                    <lb-auto-complete appearance="outline" placeholder="Type" label="Type" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['type']" [options]="selectType">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <mat-label>Day</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="day" placeholder="Day" type="number">
+                        <mat-error>
+                            <vmessage field="day" [control]="form.controls['day']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="form.controls['type'].value === 'sms' || form.controls['type'].value === 'both'">
+                <div class="form-group" >
+                    <mat-label>Sms</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <textarea matInput formControlName="sms"  placeholder="Sms" rows="3" type="text"></textarea>
+                        <mat-error>
+                            <vmessage field="sms" [control]="form.controls['sms']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-12" *ngIf="form.controls['type'].value === 'sms' || form.controls['type'].value === 'both'">
+                <div class="form-group">
+                    <mat-label>Sms Time</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="smsTime" placeholder="Sms Time" type="time">
+                        <mat-error>
+                            <vmessage field="smsTime" [control]="form.controls['smsTime']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6" *ngIf="['Developer', 'Super Admin'].includes(userInfo?.role?.name)">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Company" label="Company" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['companyId']" [options]="selectCompany">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-md-6 col-12" *ngIf="form.controls['type'].value === 'email' || form.controls['type'].value === 'both'">
+                <div class="form-group">
+                    <mat-label>Email Subject</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="emailSubject" placeholder="Email Subject" type="text">
+                        <mat-error>
+                            <vmessage field="emailSubject" [control]="form.controls['emailSubject']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-12" *ngIf="form.controls['type'].value === 'email' || form.controls['type'].value === 'both'">
+                <div class="form-group">
+                    <mat-label>Email Time</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="emailTime" placeholder="Email Time" type="time">
+                        <mat-error>
+                            <vmessage field="emailTime" [control]="form.controls['emailTime']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="form.controls['type'].value === 'email' || form.controls['type'].value === 'both'">
+                <div class="form-group" >
+                    <mat-label>Email Message</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <textarea matInput formControlName="emailMessage"  placeholder="Email Message" rows="3" type="text"></textarea>
+                        <mat-error>
+                            <vmessage field="emailMessage" [control]="form.controls['emailMessage']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} Drip Campaign by clicking the
+                    {{(_id)?'update' : 'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>

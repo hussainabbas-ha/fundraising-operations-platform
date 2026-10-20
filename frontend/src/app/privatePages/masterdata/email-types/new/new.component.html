@@ -1,0 +1,98 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Eamil Type</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Title</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="title" placeholder="Title" type="text">
+                        <mat-error>
+                            <vmessage field="title" [control]="form.controls['title']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Used For</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="used_for" placeholder="Used For" type="text">
+                        <mat-error>
+                            <vmessage field="used_for" [control]="form.controls['used_for']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <mat-label>Code</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="code" placeholder="Code" type="text">
+                        <mat-error>
+                            <vmessage field="code" [control]="form.controls['code']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <mat-label>Message</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="message" placeholder="Message" type="text">
+                        <mat-error>
+                            <vmessage field="message" [control]="form.controls['message']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-danger float-end  text-white mb-1 btn-sm" mat-ripple type="button"
+                    (click)="addfields(form.value.message,form.value.code)">{{index==-1 ?'Add':'Update'}} Field</button>
+
+            </div>
+        </div>
+        <div class="card" *ngIf="fields.length>0">
+            <div class="card-body">
+                <h5>Fields</h5>
+                <p *ngFor="let item of fields;let i=index;">{{item.message}} : <span
+                        class="badge bg-primary">{{item.code}}</span>
+                    <button class="btn btn-xs btn-warning ms-2 btn-sm" (click)="editFields(item.code,item.message,i)"
+                        mat-ripple type="button">
+                        <i class="fa-regular fa-pen-to-square text-light"></i>
+                    </button>
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} country by clicking the {{(_id)?'update'
+                    : 'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>

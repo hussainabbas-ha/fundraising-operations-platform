@@ -1,0 +1,64 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-3 col-12">
+            <h1 class="mb-0">{{id ? 'Update' : 'New'}} Role</h1>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-4 col-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-label>Name</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="name" placeholder="Name" type="text">
+                                    <mat-error>
+                                        <vmessage field="name" [control]="form.controls['name']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="form-group">
+                                <mat-label>Priority</mat-label>
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <input matInput formControlName="priority" placeholder="Priority" type="number">
+                                    <mat-error>
+                                        <vmessage field="priority" [control]="form.controls['priority']">
+                                        </vmessage>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <button class="btn btn-secondary  w-100" type="submit">{{(id)?'Update' : 'Create'}}</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12">
+        <div class="scrollable">
+            <div class="card mb-2 shadow" *ngFor="let item of getKeys(dataSource)">
+                <div class="card-body">
+                    <h5>{{item | titlecase }}</h5>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-12" *ngFor="let permission of getKeys(dataSource[item])">
+                            <mat-slide-toggle class="mb-2" (change)="setPermission(item, permission, $event)"
+                                [checked]="(permissions[item] != undefined)?permissions[item][permission]: false">{{permission
+                                | titlecase}}</mat-slide-toggle>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

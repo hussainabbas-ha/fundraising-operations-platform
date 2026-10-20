@@ -1,0 +1,67 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-3 col-12">
+            <h1 class="mb-0">Campaigns</h1>
+            <p class="text-secondary mb-2 mb-md-0">List of campaigns</p>
+        </div>
+        <div class="col-md-6 col-9">
+            <form [formGroup]="search" (ngSubmit)="filter()">
+                <div class="form-group">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput placeholder="Search Campaign" type="text" formControlName="q" />
+                        <i matSuffix class="fa-solid fa-magnifying-glass" (click)="filter()"></i>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 col-3">
+            <button mat-ripple Permission="campaign:add" (click)="createOrUpdate()"
+                class="btn btn-secondary text-light w-100"><i class="fa-solid fa-plus"></i> <span
+                    class="d-none d-md-inline"> New</span></button>
+        </div>
+    </div>
+</div>
+<div class="scroll-wrapper">
+    <div class="scroll-container">
+        <div class="scrollable">
+            <table class="table data-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Season</th>
+                        <th>Status</th>
+                        <th width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataSource">
+                        <td><span class="label">Title</span>{{item.title}}</td>
+                        <td><span class="label">Start Date</span>{{item.startDate}}</td>
+                        <td><span class="label">End Date</span>{{item.endDate}}</td>
+                        <td><span class="label">Season</span>{{item.season}}</td>
+                        <td class="c-100"><span class="label">Status</span>{{item.status}}</td>
+                        <td class="action-button">
+                            <a class="btn btn-sm btn-light" mat-ripple [matMenuTriggerFor]="menu"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></a>
+                            <mat-menu #menu="matMenu" class="bg-light">
+                                <button mat-menu-item mat-ripple Permission="campaign:view" (click)="view(item._id)"><i
+                                        class="fa-regular fa-file-lines text-info"></i> View</button>
+                                <button mat-menu-item mat-ripple Permission="campaign:update"
+                                    (click)="createOrUpdate(item._id)"><i
+                                        class="fa-regular fa-pen-to-square text-success"></i>
+                                    Update</button>
+                                <button mat-menu-item mat-ripple Permission="campaign:delete"
+                                    (click)="deleteCampaign(item._id)"><i
+                                        class="fa-regular fa-trash-can text-danger"></i>
+                                    Delete</button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <pagination [pager]="pager" [params]="queryParams"></pagination>
+</div>

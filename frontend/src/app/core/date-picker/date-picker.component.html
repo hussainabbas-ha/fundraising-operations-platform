@@ -1,0 +1,7 @@
+<mat-form-field class="w-100" appearance="outline">
+	<input matInput [disabled]="disabled" [matDatepicker]="picker" (focus)="focusOpen(picker)" (click)="picker.open()" placeholder="{{ placeholderText }}" [formControl]="fControl">
+	<mat-datepicker #picker [startView]="startView" ></mat-datepicker>
+	<mat-error>
+		<vmessage [form]="null" [control]="fControl"></vmessage>
+	</mat-error>
+</mat-form-field>

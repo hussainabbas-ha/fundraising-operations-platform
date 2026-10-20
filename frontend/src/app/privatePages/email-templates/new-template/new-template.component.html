@@ -1,0 +1,92 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-4 col-12">
+            <h1 class="mb-0">{{templateId ? 'Update' : 'New'}} Email Templates</h1>
+            <p class="text-secondary mb-2 mb-md-0">Templates</p>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-9">
+        <div class="card shadow">
+            <div class="card-body p-0">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="container p-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <mat-label>Title</mat-label>
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <input matInput formControlName="title" placeholder="Title" type="text">
+                                        <mat-error>
+                                            <vmessage field="title" [control]="form.controls['title']">
+                                            </vmessage>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <mat-label>Subject</mat-label>
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <input matInput formControlName="subject" placeholder="Subject" type="text">
+                                        <mat-error>
+                                            <vmessage field="subject" [control]="form.controls['subject']">
+                                            </vmessage>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <mat-label>Email Content</mat-label>
+                                    <app-text-editor placeholderText="email Content"
+                                        [fControl]="form.controls['message']"></app-text-editor>
+                                    <vmessage field="message" [control]="form.controls['message']"></vmessage>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <mat-label>SMS Content</mat-label>
+                                    <app-text-editor placeholderText="SMS Content"
+                                        [fControl]="form.controls['sms']"></app-text-editor>
+                                    <vmessage field="sms" [control]="form.controls['sms']"></vmessage>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="col-md-12">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" formControlName="active" />
+                                        <label class="form-check-label">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-section bg-cp_1 p-3 mt-2 rounded-bottom-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8 col-12">
+                                <small class="text-light">You can {{(templateId)?'update' : 'create'}} country by
+                                    clicking the {{(templateId)?'update' : 'create'}}.</small>
+                            </div>
+                            <div class="col-md-4 col-12 text-end">
+                                <button class="btn btn-secondary  w-100" type="submit">{{(templateId)?'Update' :
+                                    'Create'}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow" *ngIf="fields.length>0">
+            <div class="card-body p-4">
+                <h5>Fields</h5>
+                <p *ngFor="let item of fields;let i=index;">{{item.message}} : <span
+                        class="badge bg-primary">{{item.code}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

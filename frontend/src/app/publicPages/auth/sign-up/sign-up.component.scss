@@ -1,0 +1,41 @@
+.logo {
+    width: 250px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
+}
+
+.auth_background {
+    background: url('/assets/images/auth_background.png') no-repeat bottom center;
+    background-size: cover;
+}
+
+.auth_right_column {
+    padding: 60px 162px 60px 162px;
+}
+
+@media screen and (max-width:820px) {
+    .logo {
+        margin: 20px 0px;
+        width: 100px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .auth_background {
+        background: url('/assets/images/auth_background.png') no-repeat bottom center;
+        background-size: cover;
+    }
+
+    .auth_right_column {
+        padding: 20px 8px;
+    }
+    .height_100{
+        height: auto !important;
+    }
+}

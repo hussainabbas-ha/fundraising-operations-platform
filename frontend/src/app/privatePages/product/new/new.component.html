@@ -1,0 +1,191 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Product</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row align-items-center">
+            <div class="col-4 col-md-3">
+                <div class="profile-image">
+                    <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                </div>
+            </div>
+            <div class="col-8 col-md-9">
+                <button class="btn btn-secondary btn-sm" type="button" (click)="uploadFile.click()"> <i
+                        class="fa-solid fa-cloud-arrow-up"></i> Upload Image</button>
+                <input #uploadFile type="file" hidden (change)="selectImage($event)">
+                <small class="d-block mt-2">select a image as a product image.</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Title</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="title" placeholder="Title" type="text">
+                        <mat-error>
+                            <vmessage field="title" [control]="form.controls['title']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Cost Price</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Cost Price" min="0" formControlName="costPrice" type="number" />
+                        <mat-error>
+                            <vmessage field="costPrice" [control]="form.controls['costPrice']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Selling Price</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Selling Price"  min="0" formControlName="sellingPrice" type="number" />
+                        <mat-error>
+                            <vmessage field="sellingPrice" [control]="form.controls['sellingPrice']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Vendor" label="Vendor" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['vendorId']" [options]="selectVendor">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check my-2">
+                    <input class="form-check-input" type="checkbox" formControlName="isActive" />
+                    <label class="form-check-label">Active</label>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row mt-2">
+            <div class="col-8">
+                <h5 class="mb-0">Add Variants</h5>
+                <small>Click Add button to add variants of the product.</small>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-sm btn-secondary float-end" type="button" (click)="addVariant=!addVariant">
+                    Add Variants</button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="addVariant">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="varName" placeholder="Variant Name" type="text">
+                        <mat-error>
+                            <vmessage field="varName" [control]="form.controls['varName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Cost Price</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Cost Price" formControlName="varCost" min="0" type="number" />
+                        <mat-error>
+                            <vmessage field="varCost" [control]="form.controls['varCost']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Selling Price</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Selling Price" formControlName="varSell" min="0" type="number" />
+                        <mat-error>
+                            <vmessage field="varSell" [control]="form.controls['varSell']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div class="col-12">
+                <button class="btn btn-sm btn-secondary float-end" type="button" (click)="addvariant()"
+                    [disabled]="!form.controls['varName'].value || !form.controls['varCost'].value || !form.controls['varSell'].value">Add
+                </button>
+            </div>
+        </div>
+        <div *ngIf="variants.length>0">
+            <table class="table data-table">
+                <thead>
+                    <tr>
+                        <th>Sku</th>
+                        <th>Name</th>
+                        <th>Cost</th>
+                        <th>Sell</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of variants;let i=index;">
+                        <td class="c-100"><span class="label">Sku</span>
+                            {{item?.sku}}</td>
+                        <td class="c-100"><span class="label">Name</span>
+                            {{item.name}}</td>
+                        <td class="c-100"><span class="label">cost</span>
+                            {{item.costPrice}}</td>
+                        <td class="c-100"><span class="label">Sell</span>
+                            {{item.sellingPrice}}</td>
+                       
+                        <td>
+                            <a (click)="editVariant(item , i)">
+                                <i class="fa-solid fa-pen-to-square text-info"></i>
+                            </a>
+                            <a (click)="removeVariant(item)" class="ms-2">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-4">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} product by clicking the {{(_id)?'update'
+                    :
+                    'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+        </div>
+    </div>
+</form>

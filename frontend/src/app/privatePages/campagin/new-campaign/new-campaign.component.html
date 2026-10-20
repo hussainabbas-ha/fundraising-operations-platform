@@ -1,0 +1,465 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-12">
+            <h1 class="mb-0">{{(id)?'Update' : 'New'}} Campaign</h1>
+            <p class="text-secondary mb-2 mb-md-0">Campaign</p>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <mat-stepper [linear]="!step3.valid" #stepper>
+                    <mat-step [stepControl]="step1" label="Campaign Details">
+                        <form [formGroup]="step1">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <mat-label>Title</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput formControlName="title" placeholder="Title" type="text">
+                                            <mat-error>
+                                                <vmessage field="title" [control]="step1.controls['title']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <lb-auto-complete appearance="outline" placeholder="Year" label="Year"
+                                            [multiple]="false" [clear]="false" [fControl]="step1.controls['year']"
+                                            [options]="selectYear">
+                                        </lb-auto-complete>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <lb-auto-complete appearance="outline" placeholder="Seasons" label="Seasons"
+                                            [multiple]="false" [clear]="false" [fControl]="step1.controls['season']"
+                                            [options]="selectSeasons">
+                                        </lb-auto-complete>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>Start Date</mat-label>
+                                        <app-date-picker placeholderText="Start Date" label="Start Date"
+                                            [fControl]="step1.controls['startDate']">
+                                        </app-date-picker>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>End Date</mat-label>
+                                        <app-date-picker placeholderText="End Date" label="End Date"
+                                            [fControl]="step1.controls['endDate']">
+                                        </app-date-picker>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-md-6">
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <div class="form-group flex-grow-1">
+                                            <lb-auto-complete appearance="outline" placeholder="Organization"
+                                                label="Organization" [multiple]="false" [clear]="false"
+                                                [fControl]="step1.controls['organizationId']"
+                                                [options]="selectOrganization"
+                                                (selectionChange)="getLeaderLookup($event);getGroupLookup($event)">
+                                            </lb-auto-complete>
+                                        </div>
+                                        <div>
+                                            <button (click)="newOrg()" class="btn btn-info"><i
+                                                    class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <div class="form-group flex-grow-1">
+                                            <lb-auto-complete appearance="outline" placeholder="Group" label="Group"
+                                                [multiple]="false" [clear]="false"
+                                                [fControl]="step1.controls['groupId']" [options]="selectGroup">
+                                            </lb-auto-complete>
+                                        </div>
+                                        <div>
+                                            <button (click)="newGroup()" type="button" class="btn btn-info"><i
+                                                    class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <div class="form-group flex-grow-1">
+                                            <lb-auto-complete appearance="outline" placeholder="Leader" label="Leader"
+                                                [multiple]="false" [clear]="false"
+                                                [fControl]="step1.controls['leaderId']" [options]="selectLeader">
+                                            </lb-auto-complete>
+                                        </div>
+                                        <div>
+                                            <button (click)="invite()" Permission="campaign:invite"
+                                                [disabled]="!form.value.organizationId" type="button"
+                                                class="btn btn-info"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>Cc Fee</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Cc Fees" formControlName="ccFees"
+                                                type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="ccFees" [control]="step1.controls['ccFees']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button matStepperNext class="btn btn-secondary float-end" type="button"
+                                    (click)="checkformValidation(step1)">Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="step2" label="Product">
+                        <form [formGroup]="step2">
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="form-group">
+                                        <lb-auto-complete appearance="outline" placeholder="Product Type"
+                                            label="Product Type" [multiple]="false" [clear]="false"
+                                            [fControl]="step2.controls['productType']" [options]="selectProductType">
+                                        </lb-auto-complete>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-0 align-items-center"
+                                *ngIf="step2.controls['productType'].value==='digital'">
+
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="greatDonationSwitch"
+                                            (change)="enable($event,'greatDonation');addProduct(step2.value.greatDonation,'Great Donation')">
+                                            Great Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Great Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Great Doantion Amount"
+                                                [readonly]="step2.value.greatDonationSwitch === false"
+                                                formControlName="greatDonation" type="number" min="0"
+                                                (change)="addProduct(step2.value.greatDonation,'Great Donation')" />
+                                            <mat-error>
+                                                <vmessage field="greatDonation"
+                                                    [control]="step2.controls['greatDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="amazingDonationSwitch"
+                                            (change)="enable($event,'amazingDonation');addProduct(step2.value.amazingDonation,'Amazing Donation')">
+                                            Amzaing Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Amazing Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Amazing Doantion Amount"
+                                                [readonly]="step2.value.amazingDonationSwitch === false"
+                                                (change)="addProduct(step2.value.amazingDonation,'Amazing Donation')"
+                                                formControlName="amazingDonation" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="amazingDonation"
+                                                    [control]="step2.controls['amazingDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="spectacularDonationSwitch"
+                                            (change)="enable($event,'spectacularDonation');addProduct(step2.value.spectacularDonation,'Spectacular Donation')">
+                                            Spectacular Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Spectacular Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Spectacular Doantion Amount"
+                                                [readonly]="step2.value.spectacularDonationSwitch === false"
+                                                (change)="addProduct(step2.value.spectacularDonation,'Spectacular Donation')"
+                                                formControlName="spectacularDonation" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="spectacularDonation"
+                                                    [control]="step2.controls['spectacularDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="allStarDonationSwitch"
+                                            (change)="enable($event,'allStarDonation');addProduct(step2.value.allStarDonation,'All Star Donation')">
+                                            All Star Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>All Start Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="All Start Doantion Amount"
+                                                [readonly]="step2.value.allStarDonationSwitch === false"
+                                                (change)="addProduct(step2.value.allStarDonation,'All Star Donation')"
+                                                formControlName="allStarDonation" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="allStarDonation"
+                                                    [control]="step2.controls['allStarDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="gameChangerDonationSwitch"
+                                            (change)="enable($event,'gameChangerDonation');addProduct(step2.value.gameChangerDonation,'Game Changer Donation')">
+                                            Game Changer Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Game Changer Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Game Changer Doantion Amount"
+                                                [readonly]="step2.value.gameChangerDonationSwitch === false"
+                                                (change)="addProduct(step2.value.gameChangerDonation,'Game Changer Donation')"
+                                                formControlName="gameChangerDonation" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="gameChangerDonation"
+                                                    [control]="step2.controls['gameChangerDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <div class="form-check p-0">
+                                        <mat-slide-toggle formControlName="championDonationSwitch"
+                                            (change)="enable($event,'championDonation');addProduct(step2.value.championDonation,'Champion Donation')">
+                                            Champion Donation</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Champion Doantion Amount</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Champion Doantion Amount"
+                                                [readonly]="step2.value.championDonationSwitch === false"
+                                                (change)="addProduct(step2.value.championDonation,'Champion Donation')"
+                                                formControlName="championDonation" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="championDonation"
+                                                    [control]="step2.controls['championDonation']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row align-items-center" *ngIf="step2.value.productType=='physical'">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <lb-auto-complete appearance="outline" placeholder="Vendor" label="Vendor"
+                                            [multiple]="true" [clear]="false" [fControl]="step2.controls['vendorIds']"
+                                            [options]="selectVendor" (selectionChange)="getProductLookup($event)">
+                                        </lb-auto-complete>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <lb-auto-complete appearance="outline" placeholder="Product" label="Product"
+                                            [multiple]="true" [clear]="false" [fControl]="step2.controls['productIds']"
+                                            [options]="selectProduct">
+                                        </lb-auto-complete>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-md-2">
+                                    <button class="btn btn-secondary w-100" (click)="addProduct()"
+                                        [disabled]="step2.value?.vendorIds?.length===0 || step2.value?.productIds?.length === 0">Add</button>
+                                </div> -->
+
+                            </div>
+
+                            <div class="mb-5">
+                                <button matStepperNext class="btn btn-secondary float-end"
+                                     type="button"
+                                    (click)="checkformValidation(step2)">Next</button>
+                            </div>
+                        </form>
+                        <!-- <div class="card shadow w-100" *ngIf="products.length > 0">
+                            <div class="card-body">
+                                <h4>Selected Products</h4>
+                                <ng-container *ngFor="let item of products">
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <span class="small d-block text-secondary">Title</span>
+                                                    {{item.title ? item.title : 'Digital'}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span class="small d-block text-secondary">Type</span>
+                                                    {{item.productType}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span class="small d-block text-secondary">Cost Price</span>
+                                                    $ {{item.costPrice}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span class="small d-block text-secondary">Selling Price</span>
+                                                    $ {{item.sellingPrice}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div> -->
+                    </mat-step>
+
+                    <mat-step [stepControl]="step3" label="Goals Setting">
+                        <form [formGroup]="step3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <mat-label>Expected Participant</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Expected Participant"
+                                                formControlName="expectedParticipant" type="number" />
+                                            <mat-error>
+                                                <vmessage field="expectedParticipant"
+                                                    [control]="step3.controls['expectedParticipant']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>Participant Goal</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Participant Goal"
+                                                formControlName="participantGoal" type="number" />
+                                            <mat-error>
+                                                <vmessage field="participantGoal"
+                                                    [control]="step3.controls['participantGoal']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>Group Goal</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Group Goal" formControlName="groupGoal"
+                                                type="number" />
+                                            <mat-error>
+                                                <vmessage field="groupGoal" [control]="step3.controls['groupGoal']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <div class="form-group">
+                                        <mat-label>Percentage To Group %</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <input matInput form placeholder="Percentage To Group %"
+                                                formControlName="percentageToGroup" type="number" min="0" />
+                                            <mat-error>
+                                                <vmessage field="percentageToGroup"
+                                                    [control]="step3.controls['percentageToGroup']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <mat-label>Message</mat-label>
+                                        <mat-form-field class="w-100" appearance="outline">
+                                            <textarea matInput form placeholder="Message" formControlName="message"
+                                                type="text"></textarea>
+                                            <mat-error>
+                                                <vmessage field="message" [control]="step3.controls['message']">
+                                                </vmessage>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button matStepperNext class="btn btn-secondary float-end" type="button"
+                                    (click)="checkformValidation(step3)">Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="step4" label="Drip Campaign Settings">
+                        <form [formGroup]="step4">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <mat-label>Start Date</mat-label>
+                                        <app-date-picker placeholderText="Drip Start Date" label="Drip Start Date"
+                                            [fControl]="step4.controls['dripStartDate']">
+                                        </app-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <div class="form-check mt-2">
+                                        <mat-slide-toggle formControlName="isEmail">Email</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check mt-2">
+                                            <mat-slide-toggle formControlName="isText">Text</mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button matStepperNext class="btn btn-secondary float-end" type="button"
+                                    (click)="submit()">Save</button>
+                            </div>
+
+                        </form>
+                    </mat-step>
+
+                </mat-stepper>
+            </div>
+        </div>
+    </div>
+</div>

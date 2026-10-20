@@ -1,0 +1,14 @@
+<div class="container py-5">
+    <h2 class="text-center text-danger"><i class="fa-solid fa-triangle-exclamation"></i></h2>
+    <h5 class="text-center " innerHTML="{{data.message}}"></h5>
+    <h6 class="text-center" *ngIf="!data.hideUndo">This action can't be undone.</h6>
+
+    <div class="mt-3">
+        <div class="text-center button-list">
+            <button mat-ripple class="btn border  btn-sm mx-2" [mat-dialog-close]="false"><i class="fa-solid fa-xmark"></i> {{
+                (data.noBtn)? data.noBtn: 'No' }}</button>
+            <button mat-ripple class="btn btn-danger btn-sm text-light" [mat-dialog-close]="true"> <i class="fa-solid fa-check"></i> {{
+                (data.yesBtn)? data.yesBtn: 'Yes' }} </button>
+        </div>
+    </div>
+</div>

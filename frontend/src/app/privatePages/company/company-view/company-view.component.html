@@ -1,0 +1,98 @@
+<div class="org-cover-img">
+    <img src="assets/images/banner-image.png" alt="Cover image">
+</div>
+<div class="line-bar">
+
+    <div class="row">
+        <div class="col-md-4 col-xxl-3 ps-md-5">
+            <div class="card shadow" style="margin-top:-50px;">
+                <div class="card-body p-5">
+                    <div class="profile-image shadow mx-auto">
+                        <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                    </div>
+                    <div>
+                        <div class="my-4 text-capitalize text-center">
+                            <h4>{{data?.name}}</h4>
+                        </div>
+                        <div class="mb-2 d-flex">
+                            <i class="fa-solid fa-user me-3 "></i>
+                            <p class="mb-0 text-muted small">{{data?.name}}</p>
+                        </div>
+                        <div class="mb-2">
+                            <a href="mailto:{{data?.email}}" class="text-decoration-none">
+                                <i class="fa-solid fa-envelope text-warning me-3 "></i>
+                                <span class="text-muted small">{{data?.email}}</span>
+                            </a>
+                        </div>
+                        <div class="mb-2 d-flex">
+                            <a href="mailto:{{data?.phoneNo}}" class="text-decoration-none">
+                                <i class="fa-solid fa-phone text-secondary me-3 "></i>
+                                <span class="text-muted small">{{data?.phoneNo}}</span>
+                            </a>
+                        </div>
+                        <div class="mb-2 d-flex">
+                            <i class="fa-solid fa-location-dot text-success me-3 "></i>
+                            <p class="mb-0 text-muted small">{{data?.address}}</p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button mat-ripple class="btn btn-secondary btn-sm mb-2 p-2 w-100" Permission="company:update"
+                            (click)="updateCompany()"><i class="fa-solid fa-pen-to-square"></i> EDIT</button>
+                        <button mat-ripple class="btn btn-danger text-light btn-sm p-2 w-100" (click)="deleteCompany()"
+                            Permission="company:delete"><i class="fa-solid fa-trash-can"></i> DELETE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xxl-9">
+            <mat-tab-group [(selectedIndex)]="selectedIndex">
+                <mat-tab label="Organizations">
+                    <div class="scroll-wrapper mx-2">
+                        <div class="scroll-container">
+                            <div class="scrollable">
+                                <table class="table data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Groups</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of dataSource">
+                                            <td class="d-flex align-items-center c-100">
+                                                <div class="image">
+                                                    <img [src]="item.logo" alt="{{item.name + 'logo'}}"
+                                                        onError="this.src='/assets/images/victory.png'">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <span class="label text-capitalize">Name</span>{{item.name}}
+                                                </div>
+                                            </td>
+                                            <td><span class="label text-capitalize">Email</span><i
+                                                    class="fa-solid fa-envelope text-warning"></i> {{item.email}}
+                                            </td>
+                                            <td><span class="label text-capitalize">Groups</span>{{item.groups}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <pagination [pager]="pager" [params]="queryParams"></pagination>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Other Tab">
+                    <h5>Profile Tab</h5>
+                    <p>Content for the Profile tab.</p>
+                </mat-tab>
+                <mat-tab label="Other Tab">
+                    <h5>Contact Tab</h5>
+                    <p>Content for the Contact tab.</p>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

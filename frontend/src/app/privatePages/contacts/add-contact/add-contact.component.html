@@ -1,0 +1,154 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Contact</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>First Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="firstName" placeholder="First Name" type="text">
+                        <mat-error>
+                            <vmessage field="firstName" [control]="form.controls['firstName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="lastName" placeholder="Last Name" type="text">
+                        <mat-error>
+                            <vmessage field="lastName" [control]="form.controls['lastName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Contact Type" label="Contact Type" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['contactType']" [options]="selectContactType">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-12 col-md-4"  *ngIf="form.value.contactType=='email'"> 
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Email Type" label="Email Type" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['emailType']" [options]="selectEmailType">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-12 col-md-8"  *ngIf="form.value.contactType=='email'">
+                <div class="form-group">
+                    <mat-label>Email</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="email" placeholder="Email" type="email">
+                        <mat-error>
+                            <vmessage field="email" [control]="form.controls['email']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="form.value.contactType=='phone'">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Phone Type" label="Phone Type" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['phoneType']" [options]="selectPhoneType">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-12 col-md-8" *ngIf="form.value.contactType=='phone'">
+                <div class="form-group">
+                    <mat-label>Phone No</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="phoneNo" placeholder="Phone No" type="text">
+                        <mat-error>
+                            <vmessage field="phoneNo" [control]="form.controls['phoneNo']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="mb-1">
+                <button class="btn btn-secondary btn-sm" type="button" [disabled]="!form.value.contactType" (click)="pushData()">Add</button>
+            </div>
+        </div>
+        <div *ngIf="phoneNo.length>0">
+            <table class="table data-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Phone No</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of phoneNo;let i=index;">
+                        <td class="c-100"><span class="label">Type</span>
+                            {{item.type}}</td>
+                        <td class="c-100"><span class="label">Phone No</span>
+                            {{item.phoneNo}}</td>
+                        
+                        <td>
+                            <a (click)="remove(item,'phoneNo')" class="ms-2">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="emails.length>0">
+            <table class="table data-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of emails;let i=index;">
+                        <td class="c-100"><span class="label">Type</span>
+                            {{item.type}}</td>
+                        <td class="c-100"><span class="label">Email</span>
+                            {{item.email}}</td>
+                        
+                        <td>
+                            <a (click)="remove(item,'email')" class="ms-2">
+                                <i class="fa-solid fa-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} contact by clicking the {{(_id)?'update' : 'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit" >{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+
+        </div>
+       
+    </div>
+</form>

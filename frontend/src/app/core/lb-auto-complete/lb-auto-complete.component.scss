@@ -1,0 +1,11 @@
+:host {
+	display:block;
+	position: relative;
+}
+.clearFilter {
+	position: absolute;
+	right: 45px !important;
+	z-index: 50;
+	cursor: pointer;
+	top: 40px !important;
+}

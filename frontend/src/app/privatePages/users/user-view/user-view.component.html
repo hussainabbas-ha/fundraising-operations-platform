@@ -1,0 +1,176 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-3 col-12">
+            <h1 class="mb-0">User</h1>
+            <p class="text-secondary mb-2 mb-md-0">Details Page</p>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-4 col-12">
+        <div class="card text-center">
+            <div class="card-body p-4">
+                <div class="profile-image mx-auto">
+                    <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                </div>
+                <div class="my-3">
+                    <h4>{{data?.firstName}} {{data?.lastName}}</h4>
+                    <p class="text-muted small">{{data?.email}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-center  gap-3 my-4">
+                    <div class="rounded-icons">
+                        <a href="tel:{{data?.phoneNo}}">
+                            <i class="fa-solid fa-phone text-success"></i>
+                        </a>
+                    </div>
+                    <div class="rounded-icons">
+                        <a href="mailto:{{data?.email}}">
+                            <i class="fa-solid fa-envelope text-secondary"></i>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-center justify-content-center my-5">
+                    <div class="stats border-end border-2 px-4">
+                        <p class="mb-0 fw-bold">10+</p>
+                        <p class="small mb-0 text-muted">Group</p>
+                    </div>
+                    <div class="stats border-end border-2 px-4">
+                        <p class="mb-0 fw-bold">21</p>
+                        <p class="small mb-0 text-muted">Campaigns</p>
+                    </div>
+                    <div class="stats px-4">
+                        <p class="mb-0 fw-bold">$121.5</p>
+                        <p class="small mb-0 text-muted">Donation</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap flex-md-nowrap">
+                    <button mat-ripple class="btn btn-secondary w-100" Permission="user:update"><i
+                            class="fa-solid fa-pen-to-square"></i>EDIT</button>
+                    <button mat-ripple class="btn btn-danger text-light w-100" Permission="user:delete"><i
+                            class="fa-solid fa-trash-can"></i> DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12">
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Phone No</span>
+                            <p>{{data?.phoneNo}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Role</span>
+                            <p>{{data?.role}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Address</span>
+                            <p>{{data?.address}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Name</span>
+                            <p>{{data?.company?.name}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Phone</span>
+                            <p>{{data?.company?.phoneNo}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Website</span>
+                            <p>{{data?.company?.website}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Status</span>
+                            <p>{{data?.company?.status}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Email</span>
+                            <p>{{data?.company?.email}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Address</span>
+                            <p>{{data?.company?.address}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-wrapper">
+            <div class="scroll-container">
+                <div class="scrollable">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Designation</th>
+                                <th>Status</th>
+                                <th width="5%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataSource">
+                                <td class="d-flex align-items-center c-100">
+                                    <div class="image">
+                                        <img [src]="item.image" alt="{{item.name + 'image'}}"
+                                            onError="this.src='/assets/images/victory.png'">
+                                    </div>
+                                    <div class="ms-2">
+                                        <span class="label text-capitalize">First Name</span>{{item.firstName}}
+                                    </div>
+                                </td>
+
+                                <td class="text-capitalize"><span class="label">Last Name</span>{{item.lastName}}</td>
+                                <td class="c-100"><span class="label">Email</span>{{item.email}}</td>
+                                <td class="text-capitalize"><span class="label">Designation</span>{{item.designation}}
+                                </td>
+                                <td class="text-capitalize"><span class="label">Status</span>{{item.status}}</td>
+                                <td class="action-button">
+                                    <a class="btn btn-sm btn-light" mat-ripple [matMenuTriggerFor]="menu"><i
+                                            class="fa-solid fa-ellipsis-vertical"></i></a>
+                                    <mat-menu #menu="matMenu" class="bg-light">
+                                        <button mat-menu-item mat-ripple Permission="user:view"
+                                            (click)="view(item._id)"><i class="fa-regular fa-file-lines text-info"></i>
+                                            View</button>
+                                        <button mat-menu-item mat-ripple Permission="user:update"
+                                            (click)="newDialog(item._id)"><i
+                                                class="fa-regular fa-pen-to-square text-success"></i> Update</button>
+                                        <button mat-menu-item mat-ripple Permission="user:delete"
+                                            (click)="deleteUser(item._id)"><i
+                                                class="fa-regular fa-trash-can text-danger"></i> Delete</button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

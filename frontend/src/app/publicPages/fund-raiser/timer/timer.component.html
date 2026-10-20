@@ -1,0 +1,30 @@
+<!-- <div *ngIf="timeLeft.ms > 0" class="countdown">
+    <ul>
+        <li><span>{{timeLeft.d}}</span>days</li>
+        <li><span>{{timeLeft.h}}</span>Hours</li>
+        <li><span>{{timeLeft.m}}</span>Minutes</li>
+        <li><span>{{timeLeft.s}}</span>Seconds</li>
+    </ul>
+</div> -->
+<div *ngIf="timeLeft.ms > 0" class="row text-center">
+    <div class="col-3">
+        <div class="card bg-primary">
+            <div class="card-body text-light"><span class="h4">{{timeLeft.d}}</span><br>Days</div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-primary">
+            <div class="card-body text-light"><span class="h4">{{timeLeft.h}}</span><br>Hours</div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-primary">
+            <div class="card-body text-light"><span class="h4">{{timeLeft.m}}</span><br>Min</div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-primary">
+            <div class="card-body text-light"><span class="h4">{{timeLeft.s}}</span><br>Sec</div>
+        </div>
+    </div>
+</div>

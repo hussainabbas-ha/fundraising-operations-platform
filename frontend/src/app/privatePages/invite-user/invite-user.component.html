@@ -1,0 +1,50 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>Invite User</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Email</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Email Address" formControlName="email" type="email" />
+                        <mat-error>
+                            <vmessage field="email" [control]="form.controls['email']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Role" label="Role" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['roleId']" [options]="selectRole">
+                    </lb-auto-complete>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can invite user by clicking the invite.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">Invite</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>

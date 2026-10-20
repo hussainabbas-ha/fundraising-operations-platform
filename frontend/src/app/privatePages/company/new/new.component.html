@@ -1,0 +1,174 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Company</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="row align-items-center">
+                    <div class="col-4 col-md-3">
+                        <div class="profile-image">
+                            <div class="no-image" *ngIf="!imagePreview" onError="this.src='/assets/images/victory.png'"
+                                (click)="uploadFile.click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                        </div>
+                    </div>
+                    <div class="col-8 col-md-9">
+                        <button class="btn btn-secondary btn-sm" type="button" (click)="uploadFile.click()"> <i
+                                class="fa-solid fa-cloud-arrow-up"></i> Upload Image</button>
+                        <input #uploadFile type="file" hidden (change)="selectImage($event)">
+                        <small class="d-block mt-2">select a image as a company profile image.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="name" placeholder="Name" type="text">
+                        <mat-error>
+                            <vmessage field="name" [control]="form.controls['name']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Email</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Email Address" formControlName="email" type="email" />
+                        <mat-error>
+                            <vmessage field="email" [control]="form.controls['email']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Phone</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Phone No" formControlName="phoneNo" type="tel" />
+                        <mat-error>
+                            <vmessage field="phoneNo" [control]="form.controls['phoneNo']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Licence</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="licence" placeholder="Licence" type="text">
+                        <mat-error>
+                            <vmessage field="licence" [control]="form.controls['licence']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Address</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Address" formControlName="address" type="text" />
+                        <mat-error>
+                            <vmessage field="address" [control]="form.controls['address']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Website</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Website" formControlName="website" type="text" />
+                        <mat-error>
+                            <vmessage field="website" [control]="form.controls['website']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Sub Domain</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Sub Domain" formControlName="subdomain" type="text" />
+                        <mat-error>
+                            <vmessage field="subdomain" [control]="form.controls['subdomain']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Package Type" label="Package Type"
+                        [multiple]="false" [clear]="false" [fControl]="form.controls['packageType']"
+                        [options]="selectPackage">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Package Value</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Package Value" formControlName="packageValue" type="number" />
+                        <mat-error>
+                            <vmessage field="packageValue" [control]="form.controls['packageValue']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6" *ngIf="form.value.packageType=='capped'">
+                <div class="form-group">
+                    <mat-label>Capped Amount</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Capped Amount" formControlName="cappedAmount" type="number"
+                            [required]="form.value.packageType=='capped'" />
+                        <mat-error>
+                            <vmessage field="cappedAmount" [control]="form.controls['cappedAmount']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Status" label="Status" [multiple]="false"
+                        [clear]="false" [fControl]="form.controls['status']" [options]="selectStatus">
+                    </lb-auto-complete>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} company by clicking the {{(_id)?'update'
+                    :
+                    'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+        </div>
+    </div>
+</form>

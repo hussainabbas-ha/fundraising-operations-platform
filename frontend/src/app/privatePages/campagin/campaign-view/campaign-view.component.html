@@ -1,0 +1,319 @@
+<div class="org-cover-img">
+    <img src="{{coverPreview}}" alt="Cover image">
+</div>
+<div class="line-bar">
+
+    <div class="row">
+        <div class="col-md-4 col-xxl-3 ps-md-5">
+            <div class="card shadow" style="margin-top:-50px;">
+                <div class="card-body p-5">
+                    <div class="profile-image shadow mx-auto">
+                        <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                    </div>
+                    <div>
+                        <div class="my-4 text-capitalize text-center">
+                            <h4>{{data?.title}}</h4>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-sitemap me-3 pb-2 text-primary"></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">Organization Name</p>
+                                <p class="mb-0"><span class="small">{{data?.organizationName}}</span></p>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-tree text-success me-3 pb-1"></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">Season</p>
+                                <span class="small">{{data?.season}}</span>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-chart-diagram text-primary me-3 pb-1"></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">Year</p>
+                                <span class="small">{{data?.year}}</span>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-calendar text-success me-3 pb-2"></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">Start Date</p>
+                                <span class="small">{{data?.startDate}}</span>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-calendar pb-2 text-success me-3 "></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">End Date</p>
+                                <span class="small">{{data?.endDate}}</span>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex align-items-end">
+                            <i class="fa-solid fa-circle-check pb-1 text-secondary me-3 "></i>
+                            <div>
+                                <p class="mb-0 fs-12 text-muted">Status</p>
+                                <span class="small">{{data?.status}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button mat-ripple class="btn btn-secondary btn-sm mb-2 p-2 w-100" Permission="campaign:update"
+                            (click)="createOrUpdate(data?._id)"><i class="fa-solid fa-pen-to-square"></i> EDIT</button>
+                        <button mat-ripple class="btn btn-danger text-light btn-sm p-2 w-100" (click)="deleteCampaign()"
+                            Permission="campaign:delete"><i class="fa-solid fa-trash-can"></i> DELETE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xxl-9">
+            <mat-tab-group [(selectedIndex)]="selectedIndex">
+                <mat-tab label="Campaign Goal">
+                    <div class="scroll-wrapper mx-2">
+                        <div class="scroll-container">
+                            <div class="scrollable">
+                                <div class="row text-center">
+                                    <div class="col-12 col-md-6">
+                                        <div class="card shadow mb-3">
+                                            <div class="card-body text-start d-flex align-items-center py-5">
+                                                <div class="text-success rounded-circle me-3">
+                                                    <i class="fas fa-chart-line fa-2x"></i>
+                                                </div>
+                                                <div>
+                                                    <h2 class="mb-0 text-success">{{ data?.goals?.totalRaised || 0 |
+                                                        currency }}</h2>
+                                                    <p class="text-muted mb-0">Total Raised</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="card shadow mb-3">
+                                            <div class="card-body text-start d-flex align-items-center py-5">
+                                                <div class="text-primary rounded-circle">
+                                                    <i class="fas fa-bullseye fa-2x  me-3"></i>
+                                                </div>
+                                                <div>
+                                                    <h2 class="mb-0 text-primary">{{  data?.goals?.expectedParticipant ?
+                                                        membersData.length +  ' / ' + data?.goals?.expectedParticipant : 0}}</h2>
+                                                    <p class="text-muted mb-0">Joined Members / Expected Participant</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="card shadow mb-3">
+                                            <div class="card-body text-start d-flex align-items-center py-5">
+                                                <div class="text-secondary rounded-circle me-3">
+                                                    <i class="fas fa-chart-line fa-2x"></i>
+                                                </div>
+                                                <div>
+                                                    <h2 class="mb-0 text-secondary">{{ data?.goals?.participantGoal || 0
+                                                        | currency }}</h2>
+                                                    <p class="text-muted mb-0">Participant Goal</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="card shadow mb-3">
+                                            <div class="card-body text-start d-flex align-items-center py-5">
+                                                <div class="text-danger rounded-circle">
+                                                    <i class="fas fa-bullseye fa-2x me-3"></i>
+                                                </div>
+                                                <div>
+                                                    <h2 class="mb-0 text-danger">{{ data?.goals?.groupGoal || 0 |
+                                                        currency }}</h2>
+                                                    <p class="text-muted mb-0">Group Goal</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card shadow">
+                                            <div class="card-body text-start">
+                                                <h6 class="d-flex align-items-center mb-3">
+                                                    <i class="fas fa-comment-dots text-warning me-2"></i>
+                                                    Campaign Message
+                                                </h6>
+                                                <div class="bg-light rounded p-3">
+                                                    <p class="mb-0" [class.text-muted]="!data?.goals?.message">
+                                                        {{ data?.goals?.message || 'No message available' }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                    </div>
+                </mat-tab>
+                <mat-tab label="Products">
+                    <div class="scroll-wrapper mx-2">
+                        <div class="scroll-container">
+                            <div class="scrollable">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6 mb-4" *ngFor="let item of campaignProducts">
+                                        <div class="card border-0 shadow" *ngIf="item.productType === 'physical'">
+                                            <div class="card-header bg-transparent border-bottom-0 align-items-center">
+                                                <div class="d-flex align-items-center justify-content-between w-100">
+                                                    <div>
+                                                        <span class="badge rounded-pill bg-light me-2 text-dark">SKU: {{
+                                                            item.sku ? item.sku : "--" }}</span>
+                                                    </div>
+                                                    <div class=" float-end justify-content-end">
+                                                        <span
+                                                            [Status]="item.isActive == true ? 'active' :'inactive' ">{{item.isActive
+                                                            ? 'Active' :
+                                                            'Inactive'}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <div class="row g-2 mb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <small class="text-muted d-block">Title</small>
+                                                            <h5 class="card-title mb-3 text-capitalize">{{
+                                                                item.title ? item.title:'--' }}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <small class="text-muted d-block">Product Type</small>
+                                                            <h5 class="card-title mb-3 text-capitalize">{{
+                                                                item.productType }}</h5>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row g-2 mb-3">
+                                                    <div class="col-6">
+                                                        <div class="bg-light rounded p-2 text-center">
+                                                            <small class="text-muted d-block">Cost Price</small>
+                                                            <span class="fw-bold text-danger">${{ item.costPrice
+                                                                }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="bg-light rounded p-2 text-center">
+                                                            <small class="text-muted d-block">Selling Price</small>
+                                                            <span class="fw-bold text-success">${{ item.sellingPrice
+                                                                }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="item.variants && item.variants.length > 0">
+                                                    <h6 class="text-uppercase text-muted small mb-3">Variants</h6>
+                                                    <div class="bg-light rounded p-3 mb-3"
+                                                        *ngFor="let subItem of item.variants">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <span class="fw-bold">{{subItem.name }}</span>
+                                                            <span class="badge bg-white border text-dark">SKU: {{
+                                                                subItem.sku }}</span>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between small">
+                                                            <span class="text-muted">Cost Price: <span
+                                                                    class="text-danger fw-semibold">${{
+                                                                    subItem.costPrice }}</span> </span>
+                                                            <span class="text-primary">Sell Price: <span
+                                                                    class="text-success fw-semibold">${{
+                                                                    subItem.sellingPrice }}</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card border-0 shadow" *ngIf="item.productType === 'digital'">
+                                            <div class="card-header bg-transparent border-bottom-0 align-items-center">
+                                                <div class="d-flex align-items-center justify-content-between w-100">
+                                                    <div>
+
+                                                    </div>
+                                                    <div class="float-end justify-content-end">
+                                                        <span
+                                                            [Status]="item.isActive == true ? 'active' :'inactive' ">{{item.isActive
+                                                            ? 'Active' :
+                                                            'Inactive'}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <div class="row g-2 mb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <small class="text-muted d-block">Title</small>
+                                                            <h5 class="card-title mb-3 text-capitalize">{{
+                                                                item.title ? item.title:'Digital' }}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <small class="text-muted d-block">Product Type</small>
+                                                            <h5 class="card-title mb-3 text-capitalize">{{
+                                                                item.productType }}</h5>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div *ngIf="item.products && item.products.length > 0">
+                                                    <h6 class="text-uppercase text-muted small mb-3">Products</h6>
+                                                    <div class="bg-light rounded p-3 mb-3"
+                                                        *ngFor="let subItem of item.products">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <span class="fw-bold">{{subItem.title }}</span>
+
+                                                        </div>
+                                                        <div class="d-flex justify-content-between small">
+                                                            <span class="text-muted">Amount: <span
+                                                                    class="text-success fw-semibold">${{
+                                                                    subItem.amount }}</span> </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+              
+                    </div>
+                </mat-tab>
+                <mat-tab label="Members">
+                    <div class="scroll-wrapper mx-2">
+                        <div class="scroll-container">
+                            <div class="scrollable">
+                                <table class="table data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of membersData">
+                                            <td><span class="label">Name</span>{{item.name}}</td>
+                                            <td class="c-100"><span class="label">Email</span>{{item.email}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <pagination [pager]="pager" [params]="queryParams"></pagination>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Group</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="row align-items-center">
+                    <div class="col-4 col-md-3">
+                        <div class="profile-image">
+                            <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <img src="{{imagePreview}}" alt="demo-group" *ngIf="imagePreview">
+                        </div>
+                    </div>
+                    <div class="col-8 col-md-9">
+                        <button class="btn btn-secondary btn-sm" type="button" (click)="uploadFile.click()"> <i
+                                class="fa-solid fa-cloud-arrow-up"></i> Upload Image</button>
+                        <input #uploadFile type="file" hidden (change)="selectImage($event,'logo')">
+                        <small class="d-block mt-2">select a image as a group profile image.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="name" placeholder="Name" type="text">
+                        <mat-error>
+                            <vmessage field="name" [control]="form.controls['name']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="form-group">
+                    <lb-auto-complete appearance="outline" placeholder="Organization" label="Organization"
+                        [multiple]="false" [clear]="false" [fControl]="form.controls['organizationId']"
+                        [options]="selectOrganization">
+                    </lb-auto-complete>
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn  btn-secondary mt-4" type="button" (click)="addOrg()">+</button>
+            </div>
+            <div class="col-12">
+                    <div class="no-image" *ngIf="!coverImages" (click)="coverImage.click()">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div [ngStyle]="{'background-image': 'url(' + coverImages + ')'}" class="cover-image">
+                    </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-secondary btn-sm mt-2" type="button" (click)="coverImage.click()"> <i
+                        class="fa-solid fa-cloud-arrow-up"></i> Upload Cover</button>
+                <input #coverImage type="file" hidden (change)="selectImage($event,'coverImage')">
+                <small class="d-block mt-2">select a image as a group cover image.</small>
+            </div>
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} group by clicking the {{(_id)?'update' :
+                    'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>

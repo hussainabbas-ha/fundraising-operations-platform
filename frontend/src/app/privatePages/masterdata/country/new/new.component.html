@@ -1,0 +1,93 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>{{(_id)?'Update' : 'New'}} Country</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Country Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="name" placeholder="Country Name" type="text">
+                        <mat-error>
+                            <vmessage field="name" [control]="form.controls['name']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Capital</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="capital" placeholder="Capital" type="text">
+                        <mat-error>
+                            <vmessage field="capital" [control]="form.controls['capital']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Phone Code</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <i matPrefix class="fa-solid fa-plus"></i>
+                        <input matInput formControlName="phone_code" placeholder="Phone Code" type="text">
+                        <mat-error>
+                            <vmessage field="phone_code" [control]="form.controls['phone_code']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <mat-label>ISO3</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="iso3" placeholder="ISO3" type="text">
+                        <mat-error>
+                            <vmessage field="iso3" [control]="form.controls['iso3']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <mat-label>Currency</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="currency" placeholder="currency" type="text">
+                        <mat-error>
+                            <vmessage field="currency" [control]="form.controls['currency']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can {{(_id)?'update' : 'create'}} country by clicking the {{(_id)?'update' : 'create'}}.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit" >{{(_id)?'Update' : 'Create'}}</button>
+            </div>
+
+        </div>
+       
+    </div>
+</form>

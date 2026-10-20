@@ -1,0 +1,109 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu bg-sidemenu" [class.sidebar-enable]="sideBarStatus | async">
+    <div class="h-100" data-simplebar>
+        <div class="text-center py-5">
+            <img src="/assets/logos/sideBar_logo.png" alt="ventav logo" class="d-none d-lg-inline-block">
+        </div>
+        <button class="btn btn-primary btn-sm mt-2 closeMenu d-lg-none" mat-ripple (click)="closeMenu();">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <!-- <div class="w-100 text-center p-2 mt-2  d-lg-block ">
+            <img src="/assets/images/user.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md w-25">
+        </div>
+        <div class="user-box text-center mt-2 mt-lg-0" (click)="topmenu = !topmenu">
+            <div class="dropdown">
+                <a href="javascript: void(0);" class="text-light  title  mt-2  mb-1 d-block"
+                data-bs-toggle="dropdown">danish <span class="bi bi-caret-down-fill"></span></a>
+                <div class="dropdown-menu user-pro-dropdown" [class.show]="topmenu">
+                    <a  class="dropdown-item notify-item" routerLink="profile">
+                        <i class="fe-lock me-1"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a (click)="logout()" class="dropdown-item notify-item">
+                        <i class="fe-log-out me-1"></i>
+                        <span>Logout</span>
+                    </a>
+                    
+                </div>
+            </div>
+        </div> -->
+        <div id="sidebar-menu">
+            <ul>
+                <ng-container *ngFor="let item of naviIteam">
+                    <li>
+                        <a routerLink="{{item.url}}" Permission="{{item.permission}}:view" routerLinkActive="active"
+                            (click)="closeMenu()" *ngIf="!item.childs">
+                            <i *ngIf="item.icon" class="{{item.icon}}"></i>
+                            <span>{{item.label}}</span>
+                        </a>
+
+                        <a (click)="item.open = !item.open;" Permission="{{item.permission}}:view"
+                            class="multiple-items" [ngClass]="{ 'oppened': item.open }"
+                            *ngIf="item.childs && item.childs.length > 0">
+                            <i *ngIf="item.icon" class="{{item.icon}}"></i>
+                            <span>{{item.label}}</span>
+                            <i class="fa-solid fa-chevron-up float-end" [class.open]="item.open"></i>
+                        </a>
+                        <div class="collapse nav-second-level-hover" [ngClass]="{ 'show': item.open }"
+                            *ngIf="item.childs && item.childs.length">
+                            <ul class="nav-second-level">
+                                <ng-container *ngFor="let subitem of item.childs">
+                                    <li>
+                                        <a routerLink="{{item.url}}/{{subitem.url}}" routerLinkActive="active"
+                                            Permission="{{subitem.permission}}:view" (click)="closeMenu()"
+                                            class="text-decoration-none">
+                                            <i *ngIf="subitem.icon" class="{{subitem.icon}}"></i>
+                                            <span> {{subitem.label}}</span>
+                                        </a>
+
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </li>
+                </ng-container>
+
+
+            </ul>
+            <div class="bottom-sheet" [class.show]="isOpen">
+                <ul>
+                    <li>
+                        <a routerLinkActive="menuitem-active" routerLink="profile" (click)="isOpen=!isOpen"
+                            Permission="user:view">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLinkActive="menuitem-active" (click)="changePassword()">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>Change Password</span>
+                        </a>
+                    </li>
+                    <li routerLinkActive="menuitem-active">
+                        <a (click)="logout()">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="userInfo">
+                <div class="d-flex align-items-center text-dark" (click)="toggleDiv()">
+                    <div class="user-image">
+                        <img src="/assets/images/demo-user.jpg" alt="user-iamge">
+                    </div>
+                    <div class="mx-2 flex-grow-1 text-capitalize">
+                        <h6 class="m-0 ">{{userInfo?.firstName}}</h6>
+                        <small class="text-secondary">{{userInfo?.role.name}}</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-up float-end"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="clearfix">
+
+        </div>
+    </div>

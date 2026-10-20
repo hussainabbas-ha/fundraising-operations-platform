@@ -1,0 +1,124 @@
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-12">
+            <h1 class="mb-0">Profile</h1>
+            <p class="text-secondary mb-2 mb-md-0">User Profile</p>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-4 col-12">
+        <div class="card text-center">
+            <div class="card-body p-4">
+                <div class="profile-image shadow mx-auto">
+                    <div class="no-image" *ngIf="!imagePreview">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                </div>
+                <div class="my-3">
+                    <h4>{{data?.firstName}} {{data?.lastName}}</h4>
+                    <p class="text-muted small">{{data?.email}}</p>
+                </div>
+                <div class="d-flex align-items-center justify-content-center  gap-3 my-4">
+                    <div class="rounded-icons">
+                        <a href="tel:{{data?.phoneNo}}">
+                            <i class="fa-solid fa-phone text-success"></i>
+                        </a>
+                    </div>
+                    <div class="rounded-icons">
+                        <a href="mailto:{{data?.email}}">
+                            <i class="fa-solid fa-envelope text-secondary"></i>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-center justify-content-center my-5">
+                    <div class="stats border-end border-2 px-4">
+                        <p class="mb-0 fw-bold">10+</p>
+                        <p class="small mb-0 text-muted">Group</p>
+                    </div>
+                    <div class="stats border-end border-2 px-4">
+                        <p class="mb-0 fw-bold">21</p>
+                        <p class="small mb-0 text-muted">Campaigns</p>
+                    </div>
+                    <div class="stats px-4">
+                        <p class="mb-0 fw-bold">$121.5</p>
+                        <p class="small mb-0 text-muted">Donation</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap flex-md-nowrap">
+                    <button mat-ripple class="btn btn-secondary w-100" Permission="user:update"
+                        (click)="updateProfile()"><i class="fa-solid fa-pen-to-square"></i> EDIT</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12">
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Phone No</span>
+                            <p><i class="fa-solid fa-phone text-primary"></i> {{data?.phoneNo ? data?.phoneNo : '__'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Role</span>
+                            <p><i class="fa-solid fa-user text-primary"></i> {{data?.role ? data?.role :'__'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Address</span>
+                            <p><i class="fa-solid fa-location-dot text-primary"></i> {{data?.address ? data?.address : '__'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Name</span>
+                            <p>{{data?.company?.name ? data?.company?.name: '__'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Phone</span>
+                            <p><i class="fa-solid fa-phone text-primary"></i> {{data?.company?.phoneNo ? data?.company?.phoneNo : '__'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Website</span>
+                            <p><i class="fa-solid fa-globe text-primary"></i> {{data?.company?.website ? data?.company?.website:"__"}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Status</span>
+                            <p class="text-capitalize">{{data?.company?.status ? data?.company?.status :'__'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Email</span>
+                            <p><i class="fa-solid fa-envelope text-primary"></i> {{data?.company?.email ? data?.company?.email: '__'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border-bottom border-2">
+                            <span class="small text-muted">Company Address</span>
+                            <p><i class="fa-solid fa-location-dot text-primary"></i> {{data?.company?.address ? data?.company?.address : '__'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

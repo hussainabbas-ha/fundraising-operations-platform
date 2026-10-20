@@ -1,0 +1,13 @@
+.org-cover-img{
+    width: 100%;
+    img{
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+    }
+}
+.scroll-wrapper .scroll-container .scrollable {
+    height: calc(100vh - 300px);
+}

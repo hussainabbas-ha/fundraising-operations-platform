@@ -1,0 +1,86 @@
+<div class="page-header">
+    <div class="row align-items-top">
+        <div class="col-md-3 col-12">
+            <h1 class="mb-0">Contacts</h1>
+            <p class="text-secondary mb-2 mb-md-0">List of contacts</p>
+        </div>
+        <div class="col-md-6 col-9">
+            <form [formGroup]="search" (ngSubmit)="filter()">
+                <div class="form-group">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput placeholder="Search Contact" type="text" formControlName="q" />
+                        <i matSuffix class="fa-solid fa-magnifying-glass" (click)="filter()"></i>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 col-3">
+            <button mat-ripple Permission="contact:add" (click)="createOrUpdate()"
+                class="btn btn-secondary text-light w-100"><i class="fa-solid fa-plus"></i> <span
+                    class="d-none d-md-inline"> New</span></button>
+        </div>
+    </div>
+</div>
+<div class="scroll-wrapper">
+    <div class="scroll-container">
+        <div class="scrollable">
+            <table class="table data-table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataSource">
+                        <td><span class="label">First Name</span>{{item.firstName}}</td>
+                        <td><span class="label">Last Name</span>{{item.lastName}}</td>
+                        <td><span class="label">Email</span>
+                            <ng-container *ngFor="let email of item?.emails">
+                                <div>
+                                    <small>
+                                        <i class="fa-solid fa-envelope me-2 text-warning"></i>
+                                        {{ email.email }}
+                                    </small>
+                                  
+                                </div>
+                              </ng-container>
+
+                        </td>
+                        <td><span class="label">Phone</span>
+                            <ng-container *ngFor="let phone of item?.phoneNos">
+                                <div>
+                                    <small>
+                                        <i class="fa-solid fa-phone me-2 text-primary"></i>
+                                        {{ phone.phoneNo }}
+                                    </small>
+                                
+                                </div>
+                              </ng-container>
+                        </td>
+                        <td class="action-button">
+                            <a class="btn btn-sm btn-light" mat-ripple [matMenuTriggerFor]="menu"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></a>
+                            <mat-menu #menu="matMenu" class="bg-light">
+                                <!-- <button mat-menu-item mat-ripple Permission="contact:view"><i
+                                        class="fa-regular fa-file-lines text-info"></i> View</button> -->
+                                <button mat-menu-item mat-ripple Permission="contact:update"
+                                    (click)="createOrUpdate(item._id)"><i
+                                        class="fa-regular fa-pen-to-square text-success"></i>
+                                    Update</button>
+                                <button mat-menu-item mat-ripple Permission="contact:delete"
+                                    (click)="deleteContact(item._id)"><i
+                                        class="fa-regular fa-trash-can text-danger"></i>
+                                    Delete</button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <pagination [pager]="pager" [params]="queryParams"></pagination>
+</div>

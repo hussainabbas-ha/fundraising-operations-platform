@@ -1,0 +1,126 @@
+<div class="container p-4">
+    <div class="row align-items-baseline">
+        <div class="col-8">
+            <h4>Update Profile</h4>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-sm float-end" mat-ripple type="button" (click)="close();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="my-1">
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="container px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="row align-items-center">
+                    <div class="col-4 col-md-3">
+                        <div class="profile-image">
+                            <div class="no-image" *ngIf="!imagePreview" (click)="uploadFile.click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <img src="{{imagePreview}}" alt="demo-user" *ngIf="imagePreview">
+                        </div>
+                    </div>
+                    <div class="col-8 col-md-9">
+                        <button class="btn btn-secondary btn-sm" type="button" (click)="uploadFile.click()"> <i
+                                class="fa-solid fa-cloud-arrow-up"></i> Upload Image</button>
+                        <input #uploadFile type="file" hidden (change)="selectImage($event)">
+                        <small class="d-block mt-2">select a image as a user profile image.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>First Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="firstName" placeholder="First Name" type="text">
+                        <mat-error>
+                            <vmessage field="firstName" [control]="form.controls['firstName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Last Name</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput formControlName="lastName" placeholder="Last Name" type="text">
+                        <mat-error>
+                            <vmessage field="lastName" [control]="form.controls['lastName']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Email</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Email Address" formControlName="email" type="email" readonly />
+                        <mat-error>
+                            <vmessage field="email" [control]="form.controls['email']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <mat-label>Address</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Address" formControlName="address" type="text"  />
+                        <mat-error>
+                            <vmessage field="address" [control]="form.controls['address']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Zip Code</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Zip Code" formControlName="zipCode" type="text" />
+                        <mat-error>
+                            <vmessage field="zipCode" [control]="form.controls['zipCode']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <mat-label>Phone</mat-label>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <input matInput form placeholder="Phone No" formControlName="phoneNo" type="tel" />
+                        <mat-error>
+                            <vmessage field="phoneNo" [control]="form.controls['phoneNo']">
+                            </vmessage>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            
+        
+        </div>
+    </div>
+    <div class="footer-section bg-cp_1 p-3 mt-2">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <small class="text-light">You can update profile by clicking update.</small>
+            </div>
+            <div class="col-md-4 col-12 text-end">
+                <button class="btn btn-secondary  w-100" type="submit">Update</button>
+            </div>
+
+        </div>
+
+    </div>
+</form>
