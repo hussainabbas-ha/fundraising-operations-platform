@@ -1,18 +1,18 @@
-# Victory Funds
+# Fundraising Operations Platform
 
-Fundraising and donor operations platform for campaigns, organizations, contacts, and automated email. It includes a public fundraiser page for campaign participants.
+Full-stack platform for fundraising campaigns, donor engagement, contacts, and automated communications, including public campaign pages.
 
 ## Overview
 
-Victory Funds is a full-stack TypeScript application:
+This application is built with TypeScript across web and API layers:
 
-- **Frontend:** Angular 18 with Angular Material, Bootstrap, SSR, JWT auth, and rich-text email templates.
-- **Backend:** Node.js, Express, and TypeScript with MongoDB, JWT authentication, file uploads, and optional payment/email integrations.
+- **Frontend:** Angular 18 with Angular Material, Bootstrap, SSR, JWT authentication, and rich-text email templates.
+- **Backend:** Node.js, Express, and TypeScript with MongoDB, JWT authentication, file uploads, and optional payment and email integrations.
 
 ## Features
 
 - Organizations, companies, groups, users, and role-based access
-- Campaigns with public fundraiser pages
+- Campaigns with public fundraising pages
 - Contacts, contact groups, vendors, and products
 - Email templates and drip campaigns
 - Donations and payment-provider hooks
@@ -22,7 +22,7 @@ Victory Funds is a full-stack TypeScript application:
 ## Project structure
 
 ```text
-victoryfunds/
+.
 ├── backend/     # Express API (TypeScript)
 └── frontend/    # Angular 18 web app
 ```
@@ -57,7 +57,7 @@ npm start
 
 The Angular app starts on `http://localhost:4200` and proxies `/api/` and `/files/` to the backend.
 
-Public fundraiser pages are available at:
+Public fundraising pages are available at:
 
 ```text
 /campaign-progress/:campaignId/fund-raising/:studentId
