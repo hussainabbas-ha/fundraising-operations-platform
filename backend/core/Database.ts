@@ -56,10 +56,10 @@ export default class DataBase extends Utility {
 			const emailTypes: EmailType[] = [];
 			const emailTemplates: EmailTemplate[] = [];
 			const companies: Company[] = [
-				{ _id: new ObjectId(), name: "Victory Funds", licence: "LCE123", address: "4070 dugas road aubrey taxes", email: "info@victoryfunds.com", phoneNo: "5555555555", status: "active", website: "victoryfunds.com", subdomain: "funds", package: { type: 'percentage', value: 50 } }
+				{ _id: new ObjectId(), name: "Demo Organization", licence: "LCE123", address: "123 Example Street, Example City", email: "info@example.com", phoneNo: "+15550100013", status: "active", website: "example.com", subdomain: "funds", package: { type: 'percentage', value: 50 } }
 			];
 			const organization: Organization[] = [
-				{ _id: new ObjectId(), companyId: companies[0]._id, name: "Sports Department", address: "4070 dugas road aubrey taxes", email: "sports@victoryfunds.com", phoneNo: "222222222", isDeleted: false }
+				{ _id: new ObjectId(), companyId: companies[0]._id, name: "Sports Department", address: "123 Example Street, Example City", email: "sports@example.com", phoneNo: "+15550100014", isDeleted: false }
 			];
 			const group: Group[] = [
 				{ _id: new ObjectId(), name: "Cricket", organizationId: organization[0]._id, companyId: companies[0]._id, isDeleted: false }
@@ -76,13 +76,13 @@ export default class DataBase extends Utility {
 				}
 			];
 			const users: User[] = [
-				{ _id: new ObjectId(), firstName: "Loopbrackets", lastName: "Developer", address: "123 dugas road aubrey", email: "developer@loopbrackets.com", roleId: roles[0]._id, ...this.passwordEn("Test@123"), status: 'active' },
-				{ _id: new ObjectId(), firstName: "Super", lastName: "Admin", address: "123 dugas road aubrey", email: "superadmin@victoryfunds.com", roleId: roles[1]._id, ...this.passwordEn("Test@123"), status: 'active' },
-				{ _id: new ObjectId(), firstName: "Victory", lastName: "Admin", address: "123 dugas road aubrey", email: "admin@victoryfunds.com", roleId: roles[2]._id, ...this.passwordEn("Test@123"), status: 'active', companyId: companies[0]._id },
-				{ _id: new ObjectId(), firstName: "Victory", lastName: "Student", address: "123 dugas road aubrey", email: "student@victoryfunds.com", roleId: roles[5]._id, ...this.passwordEn("Test@123"), status: 'active', companyId: companies[0]._id }
+				{ _id: new ObjectId(), firstName: "Demo", lastName: "User", address: "123 Example Street, Example City", email: "developer@example.com", roleId: roles[0]._id, ...this.passwordEn("DemoPass123!"), status: 'active' },
+				{ _id: new ObjectId(), firstName: "Super", lastName: "Admin", address: "123 Example Street, Example City", email: "superadmin@example.com", roleId: roles[1]._id, ...this.passwordEn("DemoPass123!"), status: 'active' },
+				{ _id: new ObjectId(), firstName: "Demo", lastName: "Admin", address: "123 Example Street, Example City", email: "company-admin@example.com", roleId: roles[2]._id, ...this.passwordEn("DemoPass123!"), status: 'active', companyId: companies[0]._id },
+				{ _id: new ObjectId(), firstName: "Demo", lastName: "Student", address: "123 Example Street, Example City", email: "student@example.com", roleId: roles[5]._id, ...this.passwordEn("DemoPass123!"), status: 'active', companyId: companies[0]._id }
 			];
 			const contacts: Contact[] = [
-				{ _id: new ObjectId(), userId: users[3]._id, firstName: "Umar", lastName: "Dawood", emails: [{ type: "work", email: "work@victoryfunds.com" }, { type: "home", email: "home@victoryfunds.com" }], phoneNo: [{ type: "work", phoneNo: "+922222222222" }, { type: "home", phoneNo: "+920000000000" }] }
+				{ _id: new ObjectId(), userId: users[3]._id, firstName: "Jane", lastName: "Doe", emails: [{ type: "work", email: "work@example.com" }, { type: "home", email: "home@example.com" }], phoneNo: [{ type: "work", phoneNo: "+15550100015" }, { type: "home", phoneNo: "+15550100016" }] }
 			];
 			const contactGroup: ContactGroup[] = [
 				{ _id: new ObjectId(), userId: users[3]._id, title: "Office", contacts: [contacts[0]._id] }

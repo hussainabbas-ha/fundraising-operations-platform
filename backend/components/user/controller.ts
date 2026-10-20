@@ -188,8 +188,8 @@ export default class UserController extends BaseController {
   public list = async (req: Request, res: Response): Promise<Response> => {
     try {
       const defaultFilter = {};
-      if (["developer@loopbrackets.com", "superadmin@victoryfunds.com"].indexOf(req.user.email) == -1) {
-        defaultFilter['email'] = { $nin: ["developer@loopbrackets.com", "superadmin@victoryfunds.com", req.user.email] }
+      if (["developer@example.com", "superadmin@example.com"].indexOf(req.user.email) == -1) {
+        defaultFilter['email'] = { $nin: ["developer@example.com", "superadmin@example.com", req.user.email] }
       }
       this.getAggrigation(req, this.filter_options, defaultFilter);
       const [data, count] = await Promise.all([
